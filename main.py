@@ -4,7 +4,7 @@ import viewer as vi
 
 def main():
   cg = co.CourseGenerator()
-  course = cg.simple_course()
+  course = cg.simple_course2()
 
   agent = ag.Agent(course)
   rl = RL(agent, 10)

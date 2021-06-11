@@ -48,6 +48,30 @@ class CourseGenerator:
 
     return Course(cells)
 
+  def simple_course2(self):
+    """
+
+    30x30 の基本的なコースを作成する。スタートラインは上端、エンドラインは下端。
+    """
+
+    cells = []
+
+    for y in range(30):
+      row = []
+      for x in range(30):
+
+        if y == 0:
+          cell = StartCell(x,y)
+        elif y == 29:
+          cell = EndCell(x,y)
+        else:
+          cell = Cell(x,y)
+
+        row.append(cell)
+      cells.append(row)
+
+    return Course(cells)
+
 class Course:
   def __init__(self, cells):
     self.cells = cells
