@@ -19,8 +19,21 @@ class Viewer:
 
     canvas.pack()
 
+    info_window = tkinter.Toplevel(root)
+
+    label = tkinter.Label(info_window, text='information')
+    label.pack()
+    label_count = tkinter.Label(info_window, text='count: 0')
+    label_count.pack()
+    label_episode = tkinter.Label(info_window, text='episode: 0')
+    label_episode.pack()
+
+    self.label_count = label_count
+    self.label_episode = label_episode
+
     self.root = root
     self.canvas = canvas
+    self.info_window = info_window
 
     self.render_course(RL.agent.course)
 
@@ -33,6 +46,7 @@ class Viewer:
     """
 
     for ep in range(self.RL.max_episode):
+      self.label_episode['text'] = f'episode: {ep + 1}'
       trajectory = self.RL.do_episode()
       self.render_trajectory(trajectory)
 
@@ -61,7 +75,9 @@ class Viewer:
 
     MAX = 10
     slot = []
+    count = 0
     for cell in trajectory:
+      count += 1
 
       slot.insert(0, cell)
 
@@ -73,6 +89,7 @@ class Viewer:
 
         self.canvas.itemconfig(c.tag(), fill=colors[i])
       time.sleep(0.2)
+      self.label_count['text'] = f'count: {count}'
       self.root.update()
 
 if __name__ == '__main__':
