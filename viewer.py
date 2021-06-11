@@ -54,13 +54,26 @@ class Viewer:
 
   def render_trajectory(self, trajectory):
     """ trajectory(軌跡)をレンダリングする
+
+    直近{MAX}個のセルをスロットにいれ、描画する。
     """
-    # trajectory = ['x=5,y=5','x=5,y=6','x=5,y=7','x=5,y=8','x=6,y=9','x=7,y=9','x=7,y=10']
+    colors = ['#0000ff', '#1414ff', '#2828ff', '#3c3cff', '#5050ff', '#6464ff', '#7878ff', '#8c8cff', '#a0a0ff', '#b4b4ff']
+
+    MAX = 10
+    slot = []
     for cell in trajectory:
-      self.canvas.itemconfig(cell.tag(), fill='blue')
+
+      slot.insert(0, cell)
+
+      if len(slot) > MAX:
+        c = slot.pop(-1)
+        self.canvas.itemconfig(c.tag(), fill=c.COLOR)
+
+      for i, c in enumerate(slot):
+
+        self.canvas.itemconfig(c.tag(), fill=colors[i])
       time.sleep(0.2)
       self.root.update()
-
 
 if __name__ == '__main__':
   cg = course.CourseGenerator()
