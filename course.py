@@ -64,16 +64,24 @@ class Course:
     return group
   
   def get_cell(self, pos):
-    return self.cells[pos[0]][pos[1]]
+    x = pos[0]
+    y = pos[1]
+    return self.cells[y][x]
 
   def is_on_course(self, pos):
     """ ポジションがコース上にあるかどうかを判定する
     """
+    x = pos[0]
+    y = pos[1]
 
-    try:
-      self.get_cell(pos)
+    if not (0 <= y and y < len(self.cells)):
+      return False
+
+    row = self.cells[y]
+
+    if 0 <= x and x < len(row):
       return True
-    except IndexError:
+    else:
       return False
   
   def get_random_start_cell(self):
