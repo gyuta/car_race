@@ -5,17 +5,27 @@ class Agent:
   def __init__(self, course):
     self.position = [0,0] #仮
     self.former_position = self.position # TODO: なくてもvelocityで代用できるので消す
-    self.velocity = [0,0]
     self.action_list = list(itertools.product([-1,0,1], [-1,0,1]))
     
-    # agent が course に対しての知識を持たないべきか？
+    # agent が course に対しての知識を持つべきではないか？
     self.course = course
 
     self.moved_to_start_flg = False
+  
+  def initialize(self):
+    """ エピソード開始時の初期化
+    """
+
+    self.move_to_start()
+    self.velocity = [0,0]
+
+    self.moved_to_start_flg = False
+
 
   def go(self):
     """ 1エピソード分行動する
     """
+    self.initialize()
 
     result = Result()
 
@@ -25,7 +35,7 @@ class Agent:
       if self.is_courseout() or self.is_cross_trajectory():
         self.move_to_start()
 
-      print('position', self.position, self.is_courseout())
+      # print('position', self.position, self.is_courseout())
 
       if self.is_finish():
         break
@@ -42,6 +52,7 @@ class Agent:
     return result
 
   def learn(self, result):
+    print('learn')
     pass
 
   def move(self):
@@ -52,7 +63,6 @@ class Agent:
     self.moved_to_start_flg = True
     cell = self.course.get_random_start_cell()
     self.position = [cell.x, cell.y]
-    print('move to start')
 
   def select_action(self):
     # ランダムポリシーに対応するやつ。仮置き
