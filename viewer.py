@@ -70,6 +70,7 @@ class Viewer:
     """ trajectory(軌跡)をレンダリングする
 
     直近{MAX}個のセルをスロットにいれ、描画する。
+    colors は軌跡の色を表現する
     """
     colors = ['#0000ff', '#1414ff', '#2828ff', '#3c3cff', '#5050ff', '#6464ff', '#7878ff', '#8c8cff', '#a0a0ff', '#b4b4ff']
 
@@ -91,6 +92,11 @@ class Viewer:
       time.sleep(0.2)
       self.label_count['text'] = f'count: {count}'
       self.root.update()
+    
+    # 軌跡を削除
+    for cell in slot:
+      self.canvas.itemconfig(cell.tag(), fill=cell.COLOR)
+
 
 if __name__ == '__main__':
   cg = course.CourseGenerator()
@@ -99,7 +105,3 @@ if __name__ == '__main__':
   viewer = Viewer()
   viewer.render_course(course)
   viewer.root.mainloop()
-
-  # trajectory = ['x=5,y=5','x=5,y=6','x=5,y=7','x=5,y=8','x=6,y=9','x=7,y=9','x=7,y=10']
-  # print('hoge')
-  # viewer.render_trajectory(trajectory)
