@@ -58,7 +58,7 @@ class Viewer:
     # trajectory = ['x=5,y=5','x=5,y=6','x=5,y=7','x=5,y=8','x=6,y=9','x=7,y=9','x=7,y=10']
     for cell in trajectory:
       self.canvas.itemconfig(cell.tag(), fill='blue')
-      time.sleep(0.5)
+      time.sleep(0.2)
       self.root.update()
 
 
