@@ -9,13 +9,14 @@ def main():
 
   agent = mc.On_Policy_MC_Agent(course)
   # agent = ag.Agent(course)
+
   rl = RL(agent, 10)
 
   # TODO: マルチスレッドにしてRLとviewerを独立させたい
   viewer = vi.Viewer(rl)
 
   viewer.root.mainloop()
-  
+
 class RL:
   def __init__(self, agent, max_episode = 10**2):
     self.agent = agent
