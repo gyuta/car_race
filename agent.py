@@ -1,11 +1,13 @@
 import random
 import itertools
+import action as ac
 
 class Agent:
   def __init__(self, course):
     self.position = [0,0] #仮
     self.former_position = self.position # TODO: なくてもvelocityで代用できるので消す
-    self.action_list = list(itertools.product([-1,0,1], [-1,0,1]))
+    ag = ac.ActionGenerator()
+    self.action_set = ag.simple_action_set()
     
     # agent が course に対しての知識を持つべきではないか？
     self.course = course
@@ -72,12 +74,12 @@ class Agent:
 
   def select_action(self):
     # ランダムポリシーに対応するやつ。仮置き
-    action = random.choice(self.action_list)
+    action = random.sample(self.action_set, 1)[0]
 
     return action
 
   def apply_action(self, action):
-    self.velocity = [sum(v) for v in zip(self.velocity, action)]
+    self.velocity = [sum(v) for v in zip(self.velocity, action.value)]
     self.restrict_velocity()
 
   def restrict_velocity(self, minimum=0, maximum=5):
@@ -144,4 +146,8 @@ class Result:
     """
 
     return self.trajectory
+
+  def is_first_visit(self, sa_tuple):
+    """ 
+    """
 
