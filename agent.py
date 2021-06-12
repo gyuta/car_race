@@ -29,17 +29,19 @@ class Agent:
     result = re.Result()
 
     while True:
-      
-      if self.is_courseout() or self.is_cross_trajectory():
-        self.move_to_start()
 
+      # 終了条件
       if self.is_finish():
         result.record_sar(s,action,0)
         break
 
-
+      # result の記録
       if not self.first:
         result.record_sar(s,action,-1)
+      
+      # コースアウトしていたらスタートに戻す
+      if self.is_courseout() or self.is_cross_trajectory():
+        self.move_to_start()
 
       s = self.get_cell(self.position)
       action = self.select_action()

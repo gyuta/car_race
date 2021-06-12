@@ -10,7 +10,7 @@ def main():
   agent = mc.On_Policy_MC_Agent(course)
   # agent = ag.Agent(course)
 
-  rl = RL(agent, 10)
+  rl = RL(agent, 10**5)
 
   # TODO: マルチスレッドにしてRLとviewerを独立させたい
   viewer = vi.Viewer(rl)
