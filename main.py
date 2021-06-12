@@ -1,12 +1,14 @@
 import course as co
 import agent as ag
 import viewer as vi
+import mc_agent as mc
 
 def main():
   cg = co.CourseGenerator()
   course = cg.simple_course2()
 
-  agent = ag.Agent(course)
+  agent = mc.On_Policy_MC_Agent(course)
+  # agent = ag.Agent(course)
   rl = RL(agent, 10)
 
   # TODO: マルチスレッドにしてRLとviewerを独立させたい

@@ -69,7 +69,9 @@ class Agent:
     self.former_position = self.position
 
   def select_action(self):
-    # ランダムポリシーに対応するやつ。仮置き
+    return self.get_random_action()
+  
+  def get_random_action(self):
     action = random.sample(self.action_set, 1)[0]
 
     return action

@@ -74,9 +74,16 @@ class Viewer:
     """
     colors = ['#0000ff', '#1414ff', '#2828ff', '#3c3cff', '#5050ff', '#6464ff', '#7878ff', '#8c8cff', '#a0a0ff', '#b4b4ff']
 
-    MAX = 10
+    MAX = 5
     slot = []
     count = 0
+
+    # print('episode beginn')
+    # for cell in trajectory:
+    #   print(cell.tag())
+    # print()
+
+
     for cell in trajectory:
       count += 1
 
@@ -87,9 +94,9 @@ class Viewer:
         self.canvas.itemconfig(c.tag(), fill=c.COLOR)
 
       for i, c in enumerate(slot):
-
+        # TODO: 一箇所にとどまった場合に色が薄くなってしまうのを修正したい
         self.canvas.itemconfig(c.tag(), fill=colors[i])
-      time.sleep(0.2)
+      time.sleep(0.1)
       self.label_count['text'] = f'count: {count}'
       self.root.update()
     
