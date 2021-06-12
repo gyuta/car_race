@@ -60,9 +60,15 @@ class Agent:
     self.position = [sum(p) for p in zip(self.position, self.velocity)]
 
   def move_to_start(self):
+    """ ランダムなスタート地点に移動する。
+
+    former_position も変更する。
+    """
+
     self.moved_to_start_flg = True
     cell = self.course.get_random_start_cell()
     self.position = [cell.x, cell.y]
+    self.former_position = self.position
 
   def select_action(self):
     # ランダムポリシーに対応するやつ。仮置き
@@ -87,26 +93,11 @@ class Agent:
 
   def is_finish(self):
     """ ゴールしたかどうかを確認する。
-
-    ゴールラインを横切ってもゴールなので実装が少し複雑
-    先に下に降りてから、右に移動する方針で軌跡をつくる
     """
 
-    if self.moved_to_start_flg:
-      return False
-    
-    x_diff = self.velocity[0]
-    y_diff = self.velocity[1]
+    cells = self.course.get_cells_betwenn_two_position(self.former_position, self.position)
 
-    for i in range(1, x_diff + 1):
-      pos = [self.former_position[0] + i, self.former_position[1]]
-      if self.is_finish_cell(pos):
-        return True
-
-    for j in range(1, y_diff + 1):
-      pos = [self.former_position[0], self.former_position[1] + j]
-      if self.is_finish_cell(pos):
-        return True
+    return any(cell.is_finish() for cell in cells)
   
   def is_finish_cell(self, pos):
     cell = self.get_cell(pos)

@@ -16,12 +16,18 @@ class Cell:
     """
 
     return f"x={self.x},y={self.y}"
+  
+  def is_finish(self):
+    return False
 
 class StartCell(Cell):
   COLOR = 'red'
 
 class EndCell(Cell):
   COLOR = 'green'
+
+  def is_finish(self):
+    return True
 
 class CourseGenerator:
   def simple_course(self):
@@ -110,3 +116,42 @@ class Course:
   
   def get_random_start_cell(self):
     return random.sample(self.startcell_set, 1)[0]
+
+  def get_cells_betwenn_two_position(self, pos_a, pos_b):
+    """ 2つのポジションが与えられた場合に、その間にあるセルをリストで返す。端点を含む。
+
+    探索の順番は、先に右に行ってから下に降りる
+    pos_a <= pos_b である必要がある（すべての要素に対して）
+
+    途中でコースアウトする場合はその直前までのセルのリストを返す。
+
+    TODO: なめらかに２つのcellをつなげるようにする
+    """
+
+    if not (pos_a[0] <= pos_b[0] and pos_a[1] <= pos_b[1]):
+      return []
+
+    x = pos_a[0]
+    y = pos_a[1]
+
+    result = []
+    while x != pos_b[0]:
+      if self.is_on_course([x,y]):
+        result.append(self.get_cell([x,y]))
+      else:
+        break
+      x += 1
+    
+    while y!= pos_b[1]:
+      if self.is_on_course([x,y]):
+        result.append(self.get_cell([x,y]))
+      else:
+        break
+      y += 1
+    
+    if self.is_on_course([x,y]):
+      result.append(self.get_cell([x,y]))
+    
+    return result
+
+  
