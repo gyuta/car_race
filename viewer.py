@@ -78,12 +78,6 @@ class Viewer:
     slot = []
     count = 0
 
-    # print('episode beginn')
-    # for cell in trajectory:
-    #   print(cell.tag())
-    # print()
-
-
     for cell in trajectory:
       count += 1
 

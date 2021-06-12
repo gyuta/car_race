@@ -15,20 +15,7 @@ def main():
   viewer = vi.Viewer(rl)
 
   viewer.root.mainloop()
-
-  # field = create_field
-  # environment = create_environment(field)
-
-  # agent = Agent()
-
-  # for episode in range(EPISODE):
-  #   result = agent.go()
-  #   agent.learning(result)
-  #   
-  #   trajectory = drain(result)
-  #   viewer.render(field ,trajectory)
-
-
+  
 class RL:
   def __init__(self, agent, max_episode = 10**2):
     self.agent = agent
