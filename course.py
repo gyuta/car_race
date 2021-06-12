@@ -1,4 +1,5 @@
 import random
+import itertools
 
 class Cell:
   """ Course を構成する1マス。state に対応。
@@ -92,6 +93,9 @@ class Course:
         if cell.__class__.__name__ == target_name:
           group.add(cell)
     return group
+
+  def get_all_cell_list(self):
+    return list(itertools.chain.from_iterable(self.cells))
   
   def get_cell(self, pos):
     x = pos[0]

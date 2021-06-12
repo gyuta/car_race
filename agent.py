@@ -1,6 +1,7 @@
 import random
 import itertools
 import action as ac
+import result as re
 
 class Agent:
   def __init__(self, course):
@@ -11,8 +12,6 @@ class Agent:
     
     # agent が course に対しての知識を持つべきではないか？
     self.course = course
-
-    self.moved_to_start_flg = False
   
   def initialize(self):
     """ エピソード開始時の初期化
@@ -20,36 +19,34 @@ class Agent:
 
     self.move_to_start()
     self.velocity = [0,0]
-
-    self.moved_to_start_flg = False
-
+    self.first = True
 
   def go(self):
     """ 1エピソード分行動する
     """
     self.initialize()
 
-    result = Result()
+    result = re.Result()
 
     while True:
-      self.moved_to_start_flg = False
-
+      
       if self.is_courseout() or self.is_cross_trajectory():
         self.move_to_start()
 
-      # print('position', self.position, self.is_courseout())
-
       if self.is_finish():
+        result.record_sar(s,action,0)
         break
 
-      result.record_reward(-1)
-      result.record_state(self.get_cell(self.position))
 
+      if not self.first:
+        result.record_sar(s,action,-1)
+
+      s = self.get_cell(self.position)
       action = self.select_action()
-      result.record_action(action)
-
       self.apply_action(action)
       self.move()
+
+      self.first = False
     
     return result
 
@@ -67,7 +64,6 @@ class Agent:
     former_position も変更する。
     """
 
-    self.moved_to_start_flg = True
     cell = self.course.get_random_start_cell()
     self.position = [cell.x, cell.y]
     self.former_position = self.position
@@ -115,39 +111,3 @@ class Agent:
     """
 
     return False
-
-
-class Result:
-  """ S,A,Rの列を記録する
-  """
-
-  def __init__(self):
-    self.sequence = []
-    self.trajectory = []
-  
-  def record(self, r):
-    self.sequence.append(r)
-
-  def record_reward(self, r):
-    self.record(r)
-  
-  def record_action(self, a):
-    self.record(a)
-  
-  def record_state(self, s):
-    self.record_trajectory(s)
-    self.record(s)
-
-  def record_trajectory(self, s):
-    self.trajectory.append(s)
-
-  def get_trajectory(self):
-    """ S の推移から agent の辿った軌跡を表現する
-    """
-
-    return self.trajectory
-
-  def is_first_visit(self, sa_tuple):
-    """ 
-    """
-
