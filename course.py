@@ -128,6 +128,27 @@ class CourseGenerator:
       cells.append(row)
     return Course(cells)
 
+  def curve_course2(self):
+    cells = []
+    for y in range(20):
+      row = []
+      for x in range(20):
+        if y < 15:
+          if x < 10:
+            cell = Cell(x,y) if y != 0 else StartCell(x,y)
+          else:
+            cell = EmptyCell(x,y)
+        else:
+           cell = Cell(x,y)
+        
+        if x == 19 and y >=15:
+          cell = EndCell(x,y)
+
+        row.append(cell)
+      cells.append(row)
+    return Course(cells)
+
+
 class Course:
   def __init__(self, cells):
     self.cells = cells

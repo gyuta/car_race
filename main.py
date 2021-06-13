@@ -10,7 +10,7 @@ def main():
 
   cg = co.CourseGenerator()
   course = cg.simple_course2()
-  course = cg.curve_course1()
+  course = cg.curve_course2()
 
   agent = mc.On_Policy_MC_Agent(course)
   # agent = ag.Agent(course)
