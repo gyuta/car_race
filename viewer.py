@@ -76,7 +76,7 @@ class Viewer:
     直近{MAX}個のセルをスロットにいれ、描画する。
     colors は軌跡の色を表現する
     """
-    colors = ['#0000ff', '#2828ff', '#5050ff', '#7878ff', '#a0a0ff']
+    colors = ['#a0a0ff', '#7878ff', '#5050ff', '#2828ff', '#0000ff'] # 薄い -> 濃いの順
 
     MAX = 5
     slot = []
@@ -91,8 +91,7 @@ class Viewer:
         c = slot.pop(-1)
         self.canvas.itemconfig(c.tag(), fill=c.COLOR)
 
-      for i, c in enumerate(slot):
-        # TODO: 一箇所にとどまった場合に色が薄くなってしまうのを修正したい
+      for i, c in enumerate(reversed(slot)): # 一箇所にとどまった際に先頭の色を反映するため、後ろから更新していく
         self.canvas.itemconfig(c.tag(), fill=colors[i])
       time.sleep(0.1)
       self.label_count['text'] = f'count: {count}'
