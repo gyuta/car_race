@@ -19,7 +19,6 @@ class Agent:
 
     self.move_to_start()
     self.velocity = [0,0]
-    self.first = True
 
   def go(self):
     """ 1エピソード分行動する
@@ -28,6 +27,7 @@ class Agent:
 
     result = re.Result()
 
+    first = True
     while True:
 
       # 終了条件
@@ -36,7 +36,7 @@ class Agent:
         break
 
       # result の記録
-      if not self.first:
+      if not first:
         result.record_sar(s,action,-1)
       
       # コースアウトしていたらスタートに戻す
@@ -48,7 +48,7 @@ class Agent:
       self.apply_action(action)
       self.move()
 
-      self.first = False
+      first = False
     
     return result
 
@@ -106,7 +106,17 @@ class Agent:
     return cell.__class__.__name__ == 'EndCell'
 
   def is_courseout(self):
-    return not self.course.is_on_course(self.position)
+    """ 移動によってコースアウトしてないか判定する。
+
+    former_position, position, velocity を参照していることに注意
+    """
+
+    # コースアウトしていない場合の軌跡の長さ
+    expected_length = sum(self.velocity) + 1
+
+    cells = self.course.get_cells_betwenn_two_position(self.former_position, self.position)
+
+    return expected_length != len(cells)
 
   def is_cross_trajectory(self):
     """ 過去の軌跡を横切ってないか判定する
@@ -115,3 +125,8 @@ class Agent:
     """
 
     return False
+  
+  def print_position(self):
+    """ デバッグ用に現在の位置を出力
+    """
+    print(*self.position, *self.velocity)

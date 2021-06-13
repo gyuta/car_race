@@ -27,6 +27,9 @@ class Cell:
   
   def is_not_empty(self):
     return True
+  
+  def print_position(self):
+    print(f'{self.x} {self.y}')
 
 class StartCell(Cell):
   COLOR = 'red'
