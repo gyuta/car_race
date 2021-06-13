@@ -1,5 +1,6 @@
 import random
 import itertools
+import functools
 
 class Cell:
   """ Course を構成する1マス。state に対応。
@@ -7,6 +8,9 @@ class Cell:
 
   # レンダリングされる際の色を表す
   COLOR = 'gray'
+
+  # デバッグ用の表示
+  SYMBLE = 'O'
 
   def __init__(self, x, y):
     self.x = x
@@ -20,15 +24,29 @@ class Cell:
   
   def is_finish(self):
     return False
+  
+  def is_not_empty(self):
+    return True
 
 class StartCell(Cell):
   COLOR = 'red'
+  SYMBLE = 'S'
 
 class EndCell(Cell):
   COLOR = 'green'
+  SYMBLE = 'E'
 
   def is_finish(self):
     return True
+
+class EmptyCell(Cell):
+  """ コース外を表すセル
+  """
+  COLOR = "black"
+  SYMBLE = 'X'
+
+  def is_not_empty(self):
+    return False
 
 class CourseGenerator:
   def simple_course(self):
@@ -78,6 +96,34 @@ class CourseGenerator:
       cells.append(row)
 
     return Course(cells)
+  
+  def curve_course1(self):
+    """
+
+    カーブしているコースを作成する
+    """
+
+    cells = []
+    for y in range(30):
+      row = []
+      for x in range(30):
+
+        if y < 10:
+          if x < 10:
+            cell = Cell(x,y) if y != 0 else StartCell(x,y)
+          else:
+            cell = EmptyCell(x,y)
+        elif y > 15:
+          if x > 20:
+            cell = Cell(x,y) if y != 29 else EndCell(x,y)
+          else:
+            cell = EmptyCell(x,y)
+        else:
+          cell = Cell(x,y)
+
+        row.append(cell)
+      cells.append(row)
+    return Course(cells)
 
 class Course:
   def __init__(self, cells):
@@ -114,7 +160,8 @@ class Course:
     row = self.cells[y]
 
     if 0 <= x and x < len(row):
-      return True
+      cell = self.get_cell(pos)
+      return cell.is_not_empty()
     else:
       return False
   
@@ -157,5 +204,18 @@ class Course:
       result.append(self.get_cell([x,y]))
     
     return result
-
   
+  def print(self):
+    """ デバッグ用にコースをターミナルに出力する
+    """
+
+    for row in self.cells:
+      print(functools.reduce(lambda acc, cur: f"{acc} {cur.SYMBLE}", row, ""))
+
+
+# テスト用
+if __name__ == "__main__":
+  cg = CourseGenerator()
+  c = cg.curve_course1()
+  c.print()
+
