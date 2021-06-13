@@ -76,7 +76,7 @@ class Viewer:
     直近{MAX}個のセルをスロットにいれ、描画する。
     colors は軌跡の色を表現する
     """
-    colors = ['#0000ff', '#1414ff', '#2828ff', '#3c3cff', '#5050ff', '#6464ff', '#7878ff', '#8c8cff', '#a0a0ff', '#b4b4ff']
+    colors = ['#0000ff', '#2828ff', '#5050ff', '#7878ff', '#a0a0ff']
 
     MAX = 5
     slot = []
@@ -101,12 +101,3 @@ class Viewer:
     # 軌跡を削除
     for cell in slot:
       self.canvas.itemconfig(cell.tag(), fill=cell.COLOR)
-
-
-if __name__ == '__main__':
-  cg = course.CourseGenerator()
-  course = cg.simple_course()
-
-  viewer = Viewer()
-  viewer.render_course(course)
-  viewer.root.mainloop()
