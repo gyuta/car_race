@@ -1,6 +1,7 @@
 import random
 import itertools
 import functools
+import csv
 
 class Cell:
   """ Course を構成する1マス。state に対応。
@@ -52,6 +53,32 @@ class EmptyCell(Cell):
     return False
 
 class CourseGenerator:
+  def create_course_from_csv(self, file_path):
+    """ csvファイルよりコースを作る
+    """
+
+    with open(file_path) as csv_file:
+      f = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
+
+      cells = []
+      for y,csv_row in enumerate(f):
+        row = []
+        for x,s in enumerate(csv_row):
+          if s == 's':
+            cell = StartCell(x,y)
+          elif s == 'o':
+            cell = Cell(x,y)
+          elif s == 'e':
+            cell = EndCell(x,y)
+          elif s == 'x':
+            cell = EmptyCell(x,y)
+          else:
+            raise Exception('csvファイルに解釈できないワードが含まれています')
+          
+          row.append(cell)
+        cells.append(row)
+    return Course(cells)
+
   def simple_course(self):
     """
 
@@ -240,6 +267,6 @@ class Course:
 # テスト用
 if __name__ == "__main__":
   cg = CourseGenerator()
-  c = cg.curve_course1()
+  c = cg.create_course_from_csv('./csv_course1.csv')
   c.print()
 

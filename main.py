@@ -7,10 +7,13 @@ import sys
 
 def main():
   start_drawing_episode = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+  csv_flg = len(sys.argv) > 2
 
   cg = co.CourseGenerator()
-  course = cg.simple_course2()
-  course = cg.curve_course2()
+  if csv_flg:
+    course = cg.create_course_from_csv(sys.argv[2])
+  else:
+    course = cg.simple_course2()
 
   agent = mc.On_Policy_MC_Agent(course)
   # agent = ag.Agent(course)
