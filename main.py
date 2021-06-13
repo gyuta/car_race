@@ -3,17 +3,21 @@ import agent as ag
 import viewer as vi
 import mc_agent as mc
 
+import sys
+
 def main():
+  start_drawing_episode = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+
   cg = co.CourseGenerator()
   course = cg.simple_course2()
 
   agent = mc.On_Policy_MC_Agent(course)
   # agent = ag.Agent(course)
 
-  rl = RL(agent, 10**5)
+  rl = RL(agent, 10**9)
 
   # TODO: マルチスレッドにしてRLとviewerを独立させたい
-  viewer = vi.Viewer(rl)
+  viewer = vi.Viewer(rl, start_drawing_episode)
 
   viewer.root.mainloop()
 

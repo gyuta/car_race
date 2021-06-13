@@ -4,8 +4,9 @@ import time
 
 class Viewer:
 
-  def __init__(self, RL, width = 800, height = 800):
+  def __init__(self, RL, start_drawing = 1000 ,width = 800, height = 800):
     self.RL = RL
+    self.start_drawing = start_drawing
 
     root = tkinter.Tk()
     root.title("car race")
@@ -46,9 +47,12 @@ class Viewer:
     """
 
     for ep in range(self.RL.max_episode):
+
       self.label_episode['text'] = f'episode: {ep + 1}'
       trajectory = self.RL.do_episode()
-      self.render_trajectory(trajectory)
+
+      if ep >= self.start_drawing:
+        self.render_trajectory(trajectory)
 
   def render_course(self, course):
     """ course をレンダリングする
