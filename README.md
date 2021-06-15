@@ -4,6 +4,7 @@ Sutton 本(http://incompleteideas.net/book/the-book.html) の第5章演習問題
 
 <details>
 <summary>問題文の引用(英語)</summary>
+ http://incompleteideas.net/book/RLbook2020.pdf p133 より引用
 <pre>
 <!-- <code> -->
 
@@ -15,7 +16,7 @@ Sutton 本(http://incompleteideas.net/book/the-book.html) の第5章演習問題
 
 # DEMO
 
-![](https://imgur.com/CxGc9Fp)
+![demo](https://i.imgur.com/CxGc9Fp.gif)
  
 
 # Features
@@ -40,7 +41,7 @@ path_to_csv.csv は csv ファイルによって、学習するコースを指�
 
 ## csv でのコースの作成について
 
-![](https://imgur.com/sBUNXfJ)
+![csv](https://i.imgur.com/sBUNXfJ.png)
 
 上のようなシートをcsvでダウンロードし、そのcsvファイルからコースを作成できます。
 
