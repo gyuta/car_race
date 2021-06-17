@@ -64,11 +64,13 @@ class Agent:
     """ ランダムなスタート地点に移動する。
 
     former_position も変更する。
+    速度を0にする
     """
 
     cell = self.course.get_random_start_cell()
     self.position = [cell.x, cell.y]
     self.former_position = self.position
+    self.velocity = [0,0]
 
   def select_action(self):
     return self.get_random_action()
@@ -87,8 +89,13 @@ class Agent:
 
     x, yともに0 - 5 の範囲内に収まるようにする。
     つまり下か右にしか進めないことに注意する。
+
+    x,yともに0になる場合はランダムにどちらかを1にする
     """
     self.velocity = [min(max(minimum, v), maximum) for v in self.velocity]
+
+    if sum(self.velocity) == 0:
+      self.velocity = random.choice([[1,0], [0,1]])
 
   def get_cell(self, pos):
     return self.course.get_cell(pos)
