@@ -5,8 +5,6 @@ Sutton 本(http://incompleteideas.net/book/the-book.html) の第5章演習問題
 <details>
 <summary>問題文の引用(英語)</summary>
  http://incompleteideas.net/book/RLbook2020.pdf p133 より引用
-<pre>
-<!-- <code> -->
 
 > Exercise 5.12: Racetrack (programming)
 
@@ -24,8 +22,6 @@ Sutton 本(http://incompleteideas.net/book/the-book.html) の第5章演習問題
 >Apply a Monte Carlo control method to this task to compute the optimal policy from each starting state. 
 >Exhibit several trajectories following the optimal policy (but turn the noise o↵ for these trajectories).
 
-<!-- </code> -->
-</pre>
 </details>
 
 # DEMO
